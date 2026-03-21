@@ -1,0 +1,28 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Bolsa Premium Brasileira",
+      "description": "Bolsa feminina com acabamento sofisticado e identidade brasileira.",
+      "price": 320,
+      "image": "/images/bolsa.jpg",
+      "category": "bolsas"
+    },
+    {
+      "id": 2,
+      "name": "Óculos Signature Brasil",
+      "description": "Óculos premium com design elegante e inspiração tropical refinada.",
+      "price": 450,
+      "image": "/images/oculos.jpg",
+      "category": "oculos"
+    },
+    {
+      "id": 3,
+      "name": "Relógio Elegance Brasil",
+      "description": "Relógio premium com estética brasileira discreta e sofisticada.",
+      "price": 780,
+      "image": "/images/relogio.jpg",
+      "category": "relogios"
+    }
+  ]
+}

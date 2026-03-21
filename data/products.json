@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "Tênis Premium Brasileiro",
+    "price": 299.9,
+    "category": "calcados",
+    "image": "https://via.placeholder.com/200"
+  },
+  {
+    "id": 2,
+    "name": "Óculos Premium Brasil",
+    "price": 499.9,
+    "category": "oculos",
+    "image": "https://via.placeholder.com/200"
+  }
+]
