@@ -1,36 +1,66 @@
-// backend/src/server.ts
-
 import express from "express";
 import cors from "cors";
-
-import productsRoutes from "./routes/products";
-import governanceRoutes from "./routes/governance";
-import pageRoutes from "./routes/page";
-import checkoutRoutes from "./routes/checkout";
-import webhookRoutes from "./routes/webhook";
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3001;
 
 app.use(cors());
-
-app.use("/webhook", webhookRoutes);
-
 app.use(express.json());
 
+type OrderItem = {
+  id: number;
+  name: string;
+  price: number;
+  category: string;
+  quantity: number;
+  exportScore?: number;
+};
+
+type Order = {
+  id: number;
+  createdAt: string;
+  updatedAt?: string;
+  status: string;
+  buyer: {
+    company?: string;
+    name?: string;
+    email: string;
+    country: string;
+    phone?: string;
+    contactMethod?: string;
+  };
+  notes?: string;
+  items: OrderItem[];
+};
+
+const orders: Order[] = [];
+
 app.get("/", (_req, res) => {
-  res.json({
-    name: "D'OUTRO LADO API",
-    status: "ok",
-    port: PORT,
-  });
+  res.send("api rodando");
 });
 
-app.use("/products", productsRoutes);
-app.use("/governance", governanceRoutes);
-app.use("/pages", pageRoutes);
-app.use("/checkout", checkoutRoutes);
+app.get("/orders", (_req, res) => {
+  res.json(orders);
+});
 
-app.listen(PORT, () => {
-  console.log(`🚀 Backend rodando em http://localhost:${PORT}`);
+app.post("/orders", (req, res) => {
+  const newOrder: Order = {
+    id: orders.length ? orders[orders.length - 1].id + 1 : 1,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    status: req.body?.status || "pending",
+    buyer: req.body?.buyer || {
+      email: "",
+      country: "",
+    },
+    notes: req.body?.notes || "",
+    items: Array.isArray(req.body?.items) ? req.body.items : [],
+  };
+
+  orders.push(newOrder);
+  res.status(201).json(newOrder);
+});
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
 });
